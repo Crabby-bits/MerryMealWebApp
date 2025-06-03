@@ -1,0 +1,145 @@
+@charset "UTF-8";
+footer {
+    background-color: #000000;
+    position: relative;
+    z-index: 1000;
+}
+
+.footer-nav {
+    display: none;
+    flex-direction: column;
+    font-size: small;
+}
+
+.footer-social {
+    display: none;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+}
+
+.flogo {
+    max-width: 150px;
+    height: auto;
+    overflow: hidden;
+}
+
+.footer-nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+    padding: 5px 5px;
+}
+
+.flogo-large {
+    display: block;
+}
+
+
+.flogo-small {
+    display: none;
+}
+
+.flogo-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.prifooter-btn {
+    border: 2px solid green;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.prifooter-btn:hover {
+    background-color: green;
+    color: white;
+}
+
+.footer-btn {
+    text-decoration: none; 
+    position: relative; 
+}
+
+.footer-btn:hover::after {
+    content: ""; 
+    position: absolute;
+    left: 0;
+    bottom: -1.5px; 
+    width: 100%;
+    height: 2px; 
+    background-color: transparent;
+    background-color: green;
+}
+
+@media (min-width: 0px) {
+    .flogo-large {
+        display: none;
+    }
+
+    .flogo-small {
+        display: block;
+        max-width: 20%;
+        height: auto;
+    }
+}
+
+@media (min-width: 576px) {
+    .flogo-large {
+        display: none;
+    }
+
+    .flogo-small {
+        display: block;
+        max-width: 50%;
+        height: auto;
+    }
+
+    .footer-nav {
+        display: flex;
+    }
+
+    .footer-social {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .flogo-large {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .flogo-small {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .flogo {
+        max-width: 170px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .flogo {
+        max-width: 200px;
+    }
+}
