@@ -1,0 +1,80 @@
+@charset "UTF-8";
+.alternate{
+    color:white;
+}
+
+.highlight{
+    color:rgb(255, 147, 147);
+}
+
+.background-section{
+    position: relative;
+    background-image: url(../assets/HomepageBanner.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wecometext{
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+.CTA-btn{
+    display: inline-block;
+    background-color: #ff76ac;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.CTA-btn:hover{
+    background-color: #ff76ac;
+}
+
+.CTA-btn:hover:active{
+    background-color: #ff76ac;
+}
+
+
+@media (max-width: 1024px){
+    
+}
+
+@media (max-width: 768px){
+    
+}
+
+@media (max-width: 425px){
+    
+
+}
+
+@media (max-width: 375px){
+    
+} 
