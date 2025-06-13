@@ -9,7 +9,7 @@
     <link rel = "stylesheet" type = "text/css" href="<%= request.getContextPath() %>/css/bootstrap.min.css">
     <link rel = "stylesheet" type = "text/css" href="<%= request.getContextPath() %>/css/Header.css">
     <link rel = "stylesheet" type = "text/css" href="<%= request.getContextPath() %>/css/Footer.css">
-    <link rel = "stylesheet" type = "text/css" href="<%= request.getContextPath() %>/css/Homepage.css?v=2">
+    <link rel = "stylesheet" type = "text/css" href="<%= request.getContextPath() %>/css/Homepage.css?v=1">
 </head>
 <body>
 	<header id = "site-header" class="d-flex align-items-center justify-content-between p-3">
@@ -24,7 +24,6 @@
             <a href="Home" class="header-buttons">Home</a>
             <a href="Aboutus" class="header-buttons">About us</a>
             <a href="Donate" class="header-buttons">Donate</a>
-            <a href ="Login" class = "header-buttons"> Login</a>
             <c:choose>
             	<c:when test="${not empty sessionScope.userFirstName}">
                 	<a href="Account" class="register-btn">Account</a>
@@ -39,19 +38,128 @@
     </header>
 	<body>
 		<section class="background-section text-center d-flex align-items-center justify-content-center">
-    <div class="overlay">
-        <div>
-            <h1 class="wecometext">
-                "Delivering Nutrition with Compassion,<br>One Meal At A Time"
-            </h1>
-        </div>   
-        <div class="d-flex justify-content-center gap-3 mt-4"> <!-- Add margin top to space from header -->
-            <a href="Register" class="btn btn-primary CTA-btn">Become a Volunteer</a>
-            <a href="Donate" class="btn btn-primary CTA-btn">Donate Now</a>
-        </div>
-    </div>
-</section>
-
+    		<div class="overlay">
+        		<div>
+            		<h1 class="wecometext">
+                		"Delivering Nutrition with Compassion,<br>One Meal At A Time"
+            		</h1>
+        		</div>   
+        		<div class="d-flex justify-content-center gap-3 mt-4"> <!-- Add margin top to space from header -->
+            		<a href="VolunteerRegister" class="btn btn-primary CTA-btn">Become a Volunteer</a>
+            		<a href="Donate" class="btn btn-primary CTA-btn">Donate Now</a>
+        		</div>
+    		</div>
+		</section>
+		
+		<section class ="Aboutus-section text-center d-flex align-items-center justify-content-between">
+			<img src= "<%= request.getContextPath() %>/assets/Sideimageright.jpg" alt="Side Image" class="">
+			<div class="Aboutus-text">
+				<h1>ABOUT MERRYMEAL</h1>
+				<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div>
+			<img src= "<%= request.getContextPath() %>/assets/Sideimageleft.jpg" alt="Side Image" class="">
+		</section>
+		
+		<section class = "separator"></section>
+		
+		<section class="members-section text-center p-3">
+			<h2>Who We Help</h2>
+			<div class="members-container d-flex flex-wrap justify-content-center">
+				<div class="members">
+					<img src= "<%= request.getContextPath() %>/assets/Disabled.jpg" alt="Disabled Person" class="">
+					<p>Individuals with Disability</p>
+				</div>
+				<div class="members">
+					<img src= "<%= request.getContextPath() %>/assets/Senior.jpg" alt="Disabled Person" class="">
+					<p>Senior</p>
+				</div>
+				<div class="members">
+					<img src= "<%= request.getContextPath() %>/assets/LTIP.jpg" alt="Disabled Person" class="">
+					<p>Long-Term Illness Patient</p>
+				</div>
+			</div>
+			<div class="members-btn-container">
+				<a href="Members" class="btn btn-primary members-btn">Learn More</a>
+			</div>
+		</section>
+		
+		<section class = "separator"></section>
+		
+		<section class="memvol-section text-center p-3">
+			<div>
+				<h2>From Our Members</h2>
+				<div class="ourmembers-container d-flex flex-wrap justify-content-center">
+					<div class="ourmembers">
+						<img src= "<%= request.getContextPath() %>/assets/Caregiver1.jpg" alt="Caregiver" class="">
+						<p>Lorem ipsum dolor sit amet, 
+						consectetur adipisicing elit, 
+						sed do eiusmod tempor incididunt 
+						ut labore et dolore magna 
+						aliqua.</p>
+					</div>
+					<div class="ourmembers">
+						<img src= "<%= request.getContextPath() %>/assets/Caregiver2.png" alt="Caregiver" class="">
+						<p>Lorem ipsum dolor sit amet, 
+						consectetur adipisicing elit, 
+						sed do eiusmod tempor incididunt 
+						ut labore et dolore magna 
+						aliqua.</p>
+					</div>
+						<div class="ourmembers">
+						<img src= "<%= request.getContextPath() %>/assets/Caregiver3.jpg" alt="Caregiver" class="">
+						<p>Lorem ipsum dolor sit amet, 
+						consectetur adipisicing elit, 
+						sed do eiusmod tempor incididunt 
+						ut labore et dolore magna 
+						aliqua.</p>
+					</div>
+				</div>
+				<div class="ourvolunteers-container d-flex flex-wrap justify-content-center">
+					<h2>From Our Volunteers</h2>
+					<div class="ourvolunteers">
+						<img src= "<%= request.getContextPath() %>/assets/Volunteer1.jpg" alt="Volunteer" class="">
+						<p>Lorem ipsum dolor sit amet, 
+						consectetur adipisicing elit, 
+						sed do eiusmod tempor incididunt 
+						ut labore et dolore magna 
+						aliqua.</p>
+					</div>
+					<div class="ourvolunteers">
+						<img src= "<%= request.getContextPath() %>/assets/Volunteer2.jpg" alt="Volunteer" class="">
+						<p>Lorem ipsum dolor sit amet, 
+						consectetur adipisicing elit, 
+						sed do eiusmod tempor incididunt 
+						ut labore et dolore magna 
+						aliqua.</p>
+					</div>
+						<div class="ourvolunteers">
+						<img src= "<%= request.getContextPath() %>/assets/Volunteer3.jpg" alt="Volunteer" class="">
+						<p>Lorem ipsum dolor sit amet, 
+						consectetur adipisicing elit, 
+						sed do eiusmod tempor incididunt 
+						ut labore et dolore magna 
+						aliqua.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section class="partners-section text-center p-5">
+			<h2 class="partners-section-h2"> Our Partners</h2>
+				<div>
+					<img src="<%= request.getContextPath() %>/assets/Unilever.png" class="partlogo">
+					<img src="<%= request.getContextPath() %>/assets/Nestle.png" class="partlogo">
+					<img src="<%= request.getContextPath() %>/assets/DoorDash.png" class="partlogo">
+				</div>
+				<div>
+					<img src="<%= request.getContextPath() %>/assets/MasterCard.png" class="partlogo">
+					<img src="<%= request.getContextPath() %>/assets/CVSHealth.png" class="partlogo">
+					<img src="<%= request.getContextPath() %>/assets/WholeFood.png" class="partlogo">
+					<img src="<%= request.getContextPath() %>/assets/Unilever.png" class="partlogo">
+					<img src="<%= request.getContextPath() %>/assets/AARP.png" class="partlogo">
+				</div>
+		</section>
 	</body>
 	
 	<footer class="d-flex align-items-center justify-content-between p-5">

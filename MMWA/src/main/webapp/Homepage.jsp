@@ -24,7 +24,6 @@
             <a href="Home" class="header-buttons">Home</a>
             <a href="Aboutus" class="header-buttons">About us</a>
             <a href="Donate" class="header-buttons">Donate</a>
-            <a href ="Login" class = "header-buttons"> Login</a>
             <c:choose>
             	<c:when test="${not empty sessionScope.userFirstName}">
                 	<a href="Account" class="register-btn">Account</a>
@@ -46,7 +45,7 @@
             		</h1>
         		</div>   
         		<div class="d-flex justify-content-center gap-3 mt-4"> <!-- Add margin top to space from header -->
-            		<a href="Register" class="btn btn-primary CTA-btn">Become a Volunteer</a>
+            		<a href="VolunteerRegister" class="btn btn-primary CTA-btn">Become a Volunteer</a>
             		<a href="Donate" class="btn btn-primary CTA-btn">Donate Now</a>
         		</div>
     		</div>
@@ -117,6 +116,7 @@
 					</div>
 				</div>
 				<div class="ourvolunteers-container d-flex flex-wrap justify-content-center">
+					<h2>From Our Volunteers</h2>
 					<div class="ourvolunteers">
 						<img src= "<%= request.getContextPath() %>/assets/Volunteer1.jpg" alt="Volunteer" class="">
 						<p>Lorem ipsum dolor sit amet, 

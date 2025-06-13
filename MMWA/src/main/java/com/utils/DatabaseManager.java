@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 
 public class DatabaseManager {
-    private static final String URL = "jdbc:mysql://127.0.0.1:3307/efwebapp_db"; //Change the port on this one if you also changed the port on the XAMPP MySQL
+    private static final String URL = "jdbc:mysql://127.0.0.1:3307/mmwebapp_db"; //Change the port on this one if you also changed the port on the XAMPP MySQL
     private static final String USER = "merryaccess";
     private static final String PASSWORD = "M3@lsOnWheels";
 
