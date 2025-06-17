@@ -64,7 +64,7 @@
           							Caregiver
         						</label>
       						</div>
-  						</fieldset>
+  						</fieldset>	
   					</div>
   					<div class="col-md-6">
    						<label for="email" class="form-label">*Email</label>

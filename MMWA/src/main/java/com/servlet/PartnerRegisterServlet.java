@@ -101,7 +101,7 @@ public class PartnerRegisterServlet extends HttpServlet {
 
                 if (rowsInserted > 0) {
                     request.setAttribute("message", "Registration successful! Please login.");
-                    response.sendRedirect("Login.jsp");
+                    response.sendRedirect("Login");
                 } else {
                     request.setAttribute("error", "Registration failed. Please try again.");
                     request.getRequestDispatcher("/RegisterPartner.jsp").forward(request, response);

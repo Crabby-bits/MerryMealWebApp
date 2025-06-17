@@ -1,7 +1,10 @@
+E:\git\MerryMealWebApp\MMWA\src\main\java\com\models\UserLogin.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\DonationPageServlet.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\HomepageServlet.java
+E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\LoginServlet.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\MemberRegisterServlet.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\PartnerRegisterServlet.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\RegisterChoiceServlet.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\servlet\VolunteerRegisterServlet.java
 E:\git\MerryMealWebApp\MMWA\src\main\java\com\utils\DatabaseManager.java
+E:\git\MerryMealWebApp\MMWA\src\main\java\com\utils\PasswordUtils.java

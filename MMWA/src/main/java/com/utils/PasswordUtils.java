@@ -13,6 +13,11 @@ public class PasswordUtils {
         sr.nextBytes(salt);
         return Base64.getEncoder().encodeToString(salt);
     }
+    
+    public static boolean verifyPassword(String plainPassword, String salt, String storedHash) {
+        String hash = hashPassword(plainPassword, salt);
+        return hash.equals(storedHash);
+    }
 
     public static String hashPassword(String password, String salt) {
         try {

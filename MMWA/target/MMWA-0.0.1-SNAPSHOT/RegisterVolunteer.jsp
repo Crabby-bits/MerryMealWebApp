@@ -44,7 +44,7 @@
 				<h1> Volunteer Registration Form </h1>
 				<p class="info"> * is required </p>
 				</div>
-				<form class = "row g-3">
+				<form class = "row g-3" action="VolunteerRegister" method="post">
 					<div class = "col-md-6">
 						<label for = "name" class = "form-label">*Name</label>
 						<input type = "text" class = "form-control" id = "name" name="name"required>

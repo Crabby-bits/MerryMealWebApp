@@ -44,7 +44,7 @@
 				<h1> Partner Registration Form </h1>
 				<p class="info"> * is required </p>
 				</div>
-				<form class = "row g-3">
+				<form class = "row g-3" action="PartnerRegister" method="post">
 					<div class = "col-md-6">
 						<label for = "orgname" class = "form-label">*Organization Name</label>
 						<input type = "text" class = "form-control" id = "orgname" name="orgname"required>

@@ -74,6 +74,7 @@ public class MemberRegisterServlet extends HttpServlet {
         // Validate input (check if passwords match)
         if (!password.equals(rePassword)) {
             request.setAttribute("error", "Passwords do not match!");
+            System.out.println("Password wrong bozo");
             request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response);
             return;
         }
@@ -121,11 +122,9 @@ public class MemberRegisterServlet extends HttpServlet {
 
                 if (rowsInserted > 0) {
                     request.setAttribute("message", "Registration successful! Please login.");
-                    System.out.println("Register no fucky wucky");
-                    response.sendRedirect("Login.jsp");
+                    response.sendRedirect("Login");
                 } else {
                     request.setAttribute("error", "Registration failed. Please try again.");
-                    System.out.println("Register is fucky wucky");
                     request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response);
                 }
             }
@@ -133,8 +132,7 @@ public class MemberRegisterServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "Database error: " + e.getMessage());
-            System.out.println("Why fucky wucky?" + e.getMessage());
-            //request.getRequestDispatcher("/Register.jsp").forward(request, response);
+            request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response);
         }
     }
 }

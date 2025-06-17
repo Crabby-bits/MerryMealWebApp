@@ -43,8 +43,8 @@
 				<div class = "d-flex align-items-center justify-content-left">
 				<h1> Member / Caregiver Registration Form </h1>
 				<p class="info"> * is required </p>
-				</div>
-				<form class = "row g-3">
+				</div>	
+				<form class = "row g-3" action="MemberRegister" method="post">
 					<div class = "col-md-6">
 						<label for = "name" class = "form-label">*Name</label>
 						<input type = "text" class = "form-control" id = "name" name = "name" required>
@@ -64,7 +64,7 @@
           							Caregiver
         						</label>
       						</div>
-  						</fieldset>
+  						</fieldset>	
   					</div>
   					<div class="col-md-6">
    						<label for="email" class="form-label">*Email</label>
