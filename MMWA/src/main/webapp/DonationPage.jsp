@@ -43,7 +43,7 @@
 				<div class = "d-flex align-items-center justify-content-center text-center">
 				<h1> Donation Form </h1>
 				</div>
-				<form class = "row g-3">
+				<form class = "row g-3" action="Donate" method="post">
 					<h2>Donor Information</h2>
 					<div class = "col-md-6">
 						<label for = "name" class = "form-label">*Name</label>
