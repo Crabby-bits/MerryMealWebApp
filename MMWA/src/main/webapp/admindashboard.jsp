@@ -75,8 +75,8 @@
     }
 
     function handleLogout() {
-      window.location.href = "login.jsp"; // or login.html depending on your setup
-    }
+      window.location.href = "login.jsp"; // redirect to login.jsp
+	  
   </script>
 </body>
 </html>
