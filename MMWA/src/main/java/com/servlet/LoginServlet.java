@@ -51,6 +51,14 @@ public class LoginServlet extends HttpServlet {
             passwordColumn = "vol_password";
             saltColumn = "vol_salt";
             break;
+        case "ADMIN":
+            tableName = "adminuser";
+            idColumn = "vol_userid";
+            nameColumn = "vol_name";
+            emailColumn = "vol_email";
+            passwordColumn = "vol_password";
+            saltColumn = "vol_salt";
+            break;
         default: // Default to "User"
             tableName = "memberuser";
             idColumn = "mem_userid";
@@ -91,13 +99,17 @@ public class LoginServlet extends HttpServlet {
 
 	                    } else {
 	                        // Wrong password
-	                        request.setAttribute("error", "Invalid email or password.");
-	                        request.getRequestDispatcher("/LoginPage.jsp").forward(request, response);
+	                    	HttpSession session = request.getSession();
+	                    	session.setAttribute("error", "Incorrect password");
+	                    	request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response); 
+	                        return;
 	                    }
 	                } else {
 	                    // Email not found
-	                    request.setAttribute("error", "Invalid email or password.");
-	                    request.getRequestDispatcher("/LoginPage.jsp").forward(request, response);
+	                	HttpSession session = request.getSession();
+                    	session.setAttribute("error", "Invalid Email");
+                    	request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response); 
+                        return;
 	                }
 	            }
 	        }
