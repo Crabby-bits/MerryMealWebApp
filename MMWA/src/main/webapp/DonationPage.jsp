@@ -170,36 +170,60 @@
 		</div>
 	</footer>
 
-	<script src="<%= request.getContextPath() %>/js/navigation.js"></script>
+	
+	<script src="<%= request.getContextPath() %>/js/navigation.js"></script> 
 
 	<script>
 	document.querySelector(".submit-btn").addEventListener("click", function (e) {
-		e.preventDefault();
-		const form = document.querySelector("#donationForm");
-		const formData = new FormData(form);
+	    e.preventDefault();
+	    const form = document.querySelector("#donationForm");
+	    const formData = new FormData(form);
 
-		// 🔁 Replace this with your actual Google Apps Script URL
-		const scriptURL = "https://script.google.com/macros/s/AKfycbxj-VC-lIbkDrQ9WrWdj425YeMIqN2GtBqM4wkTxiv7Hm24hCmXs1gKUmkheJwm6bEg/exec";
+		// this part is the whole email reciept script portion
+	    const scriptURL = "https://script.google.com/macros/s/AKfycbxJ3czTlx6jK--OnSx-WUtQ7jgd2jroghlhEvoTrsPXOu307mRSF39DvW7zzWKLvXic/exec";
+		// above is the script link where it uses the google api to send out emails and stuff / also handles google sheet history logs.
+	    fetch(scriptURL, {
+	        method: "POST",
+	        body: formData
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+	        if (data.result === "success") {
+	            alert("🎉 Donation submitted successfully! Thank you.");
+	            form.reset();
+	            document.getElementById("billadd").readOnly = false; // Reset read-only after submission
+	        } else {
+	            alert("❌ Error: " + data.message);
+	        }
+	    })
+	    .catch(error => {
+	        console.error("Error!", error);
+	        alert("❌ Something went wrong. Please try again.");
+	    });
+	});
 
-		fetch(scriptURL, {
-			method: "POST",
-			body: formData
-		})
-		.then(response => response.json())
-		.then(data => {
-			if (data.result === "success") {
-				alert("🎉 Donation submitted successfully! Thank you.");
-				form.reset();
-			} else {
-				alert("❌ Error: " + data.message);
-			}
-		})
-		.catch(error => {
-			console.error("Error!", error);
-			alert("❌ Something went wrong. Please try again.");
-		});
+	// Automatically copy donor address to billing address and make it readonly
+	const donorAddressInput = document.getElementById("address");
+	const billingAddressInput = document.getElementById("billadd");
+	const billingCheckbox = document.getElementById("sameasdonadd");
+
+	billingCheckbox.addEventListener("change", function () {
+	    if (this.checked) {
+	        billingAddressInput.value = donorAddressInput.value;
+	        billingAddressInput.readOnly = true;
+	    } else {
+	        billingAddressInput.value = "";
+	        billingAddressInput.readOnly = false;
+	    }
+	});
+
+	donorAddressInput.addEventListener("input", function () {
+	    if (billingCheckbox.checked) {
+	        billingAddressInput.value = donorAddressInput.value;
+	    }
 	});
 	</script>
+
 
 </body>
 </html>
