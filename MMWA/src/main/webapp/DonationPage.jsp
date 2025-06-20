@@ -220,10 +220,10 @@
 	donorAddressInput.addEventListener("input", function () {
 	    if (billingCheckbox.checked) {
 	        billingAddressInput.value = donorAddressInput.value;
-	    }
+	    } // hi
 	});
 	</script>
-
+		
 
 </body>
 </html>
