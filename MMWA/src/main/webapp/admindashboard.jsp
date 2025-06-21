@@ -68,6 +68,7 @@
   </div>
 
   <!-- JavaScript inline -->
+  <!-- JavaScript inline -->
   <script>
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("active");
@@ -76,7 +77,20 @@
 
     function handleLogout() {
       window.location.href = "login.jsp"; // redirect to login.jsp
-	  
+    }
+
+    // ✅ Load total donations on page load
+    window.onload = function () {
+      fetch('<%=request.getContextPath()%>/get-total-donation')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("donationCount").textContent = "$" + (data.total || 0).toFixed(2);
+        })
+        .catch(error => {
+          console.error("Error loading donation total:", error);
+        });
+    };
   </script>
+
 </body>
 </html>
