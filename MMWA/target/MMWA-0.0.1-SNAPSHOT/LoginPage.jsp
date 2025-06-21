@@ -43,7 +43,7 @@
 				<div class = "d-flex align-items-center justify-content-center text-center">
 				<h1> Login </h1>
 				</div>	
-				<form class = "row g-3 justify-content-center" action="LoginPage" method="post">
+				<form class = "row g-3 justify-content-center" action="Login" method="post">
 					<div>
 						<label for = "email" class = "form-label">Email</label>
 						<input type = "text" class = "form-control" id = "email" name = "email" required>
@@ -56,19 +56,19 @@
 						<fieldset class="mb-3">
     					<legend class="col-form-label pt-0" >Account Type</legend>
       						<div class="form-check form-check-inline">
-        						<input class="form-check-input" type="radio" name="userrole" id="member" value="MEMBER" checked>
+        						<input class="form-check-input" type="radio" name="acctype" id="member" value="MEMBER" checked>
         						<label class="form-check-label" for="member">
           							Member / Caregiver
         						</label>
       						</div>
       						<div class="form-check form-check-inline">
-        						<input class="form-check-input" type="radio" name="userrole" id="volunteer" value="VOLUNTEER">
+        						<input class="form-check-input" type="radio" name="acctype" id="volunteer" value="VOLUNTEER">
         						<label class="form-check-label" for="volunteer">
           							Volunteer
         						</label>
       						</div>
       						<div class="form-check form-check-inline">
-        						<input class="form-check-input" type="radio" name="userrole" id="partner" value="PARTNER">
+        						<input class="form-check-input" type="radio" name="acctype" id="partner" value="PARTNER">
         						<label class="form-check-label" for="partner">
           							Partner
         						</label>
