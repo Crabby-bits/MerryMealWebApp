@@ -11,7 +11,9 @@ import java.util.List;
 
 @WebServlet("/DeliveryProgress")
 public class DeliveryProgressServlet extends HttpServlet {
-
+	
+	private static final long serialVersionUID = 1L;
+	
     private DeliveryDAO deliveryDAO;
 
     @Override

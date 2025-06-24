@@ -1,10 +1,6 @@
 package com.servlet;
 
-import com.utils.DatabaseManager;
 import java.io.IOException; 
-import java.sql.*;	
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;

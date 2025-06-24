@@ -4,8 +4,6 @@ import com.utils.DatabaseManager;
 import com.utils.EncryptionUtils;
 import java.io.IOException; 
 import java.sql.*;	
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
@@ -87,11 +85,12 @@ public class DonationPageServlet extends HttpServlet {
                 int rowsInserted = stmt.executeUpdate();
 
                 if (rowsInserted > 0) {
-                    request.setAttribute("message", "Donation successful!");
-                    response.sendRedirect("Home");
+                	HttpSession session = request.getSession();
+                	session.setAttribute("message", "Donation Successful");
                 } else {
-                    request.setAttribute("error", "Donation Failed. Please try again.");
-                    request.getRequestDispatcher("/DonationPage.jsp").forward(request, response);
+                	HttpSession session = request.getSession();
+                	session.setAttribute("error", "Donation Failed");
+                	request.getRequestDispatcher("Donate").forward(request, response);
                 }
             }
             
@@ -99,21 +98,6 @@ public class DonationPageServlet extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("error", "Database error: " + e.getMessage());
             request.getRequestDispatcher("/DonationPage.jsp").forward(request, response);
-        }
-    }
-
-    // Hashing the password using SHA-256
-    private String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedBytes = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing password", e);
         }
     }
 }

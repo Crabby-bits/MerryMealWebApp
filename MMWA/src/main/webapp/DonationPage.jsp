@@ -37,6 +37,21 @@
 
 	<section class="Memform-section d-flex justify-content-center">
 		<div class="Memform-container">
+			<c:if test="${not empty sessionScope.message}">
+    				<div class="alert alert-success alert-dismissible fade show" role="alert">
+    					${sessionScope.message}
+    					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+    				<c:remove var="message" scope="session"/>
+				</c:if>
+
+				<c:if test="${not empty sessionScope.error}">
+        			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            			${error}
+            			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        			</div>	
+        			<c:remove var="error" scope="session"/>
+    			</c:if>
 			<div class="d-flex align-items-center justify-content-center text-center">
 				<h1>Donation Form</h1>
 			</div>
