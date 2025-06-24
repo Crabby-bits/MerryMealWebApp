@@ -73,6 +73,12 @@ body {
   cursor: pointer;
 }
 
+.delivery-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.01);
+  transition: all 0.2s ease;
+}
+
 .delivery-card h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
@@ -159,6 +165,16 @@ body {
   font-size: 24px;
   cursor: pointer;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
 
 @media (max-width: 768px) {
   .container {

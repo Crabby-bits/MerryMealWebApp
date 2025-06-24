@@ -37,77 +37,58 @@
         <div class="hamburger d-lg-none" onclick="toggleMenu()">☰</div>
     </header>
 
-      <section class="sidebar">
-        <div class="sidebar-links">
-          <a href="">Dashboard</a>
-          <a href="">Deliveries</a>
-          <a href="">Volunteers</a>
-          <a href="">Reports</a>
-        </div>
-      </section>
-   <div class="container">
+		      <section class="sidebar">
+		        <div class="sidebar-links">
+		          <a href="">Dashboard</a>
+		          <a href="">Deliveries</a>
+		          <a href="">Volunteers</a>
+		          <a href="">Reports</a>
+		        </div>
+		      </section>
+		   <div class="container">
+		
+		      <main class="main-content">
+		        <header class="header">
+		          <h1>Delivery Progress</h1>
+		        </header>
+		
+		 <section class="delivery-list">
+		  <c:choose>
+		    <c:when test="${empty deliveryList}">
+		      <p style="text-align: center; font-size: 18px; margin-top: 20px;">No deliveries found.</p>
+		    </c:when>
+		    <c:otherwise>
+		      <c:forEach var="delivery" items="${deliveryList}">
+		        <div class="delivery-card"
+		        	 data-id="${delivery.deliveryId}"
+		             data-name="${delivery.clientName}"
+		             data-email="${delivery.email}"
+		             data-phone="${delivery.phoneNumber}"
+		             data-address="${delivery.address}"
+		             data-diet="${delivery.dietaryRequest}"
+		             data-meal="${delivery.meal}"
+		             data-delivery="${delivery.deliveryDate}">
+		
+		          <div class="details">
+		            <h3>Client: ${delivery.clientName}</h3>
+		            <p>Address: ${delivery.address}</p>
+		            <p>Meal: ${delivery.meal}</p>
+		            <p>Delivery Date: ${delivery.deliveryDate}</p>
+		          </div>
+		
+		          <div class="status-wrapper">
+		            <select class="status-select">
+		              <option value="pending" ${delivery.status == 'pending' ? 'selected' : ''}>Pending</option>
+		              <option value="out-for-delivery" ${delivery.status == 'out-for-delivery' ? 'selected' : ''}>Out for Delivery</option>
+		              <option value="delivered" ${delivery.status == 'delivered' ? 'selected' : ''}>Delivered</option>
+		            </select>
+		          </div>
+		        </div>
+		      </c:forEach>
+		    </c:otherwise>
+		  </c:choose>
+		</section>
 
-      <main class="main-content">
-        <header class="header">
-          <h1>Delivery Progress</h1>
-        </header>
-
-        <section class="delivery-list">
-          <div class="delivery-card"
-                data-name="John Doe" 
-                data-email="john@example.com" 
-                data-phone="09123456789" 
-                data-address="123 Elm Street" 
-                data-diet="None" 
-                data-meal="Chicken & Rice" 
-                data-delivery="10:30 AM">
-
-            <div class="details">
-              <h3>Client: John Doe</h3>
-              <p>Address: 123 Elm Street</p>
-              <p>Meal: Chicken & Rice</p>
-            </div>
-
-            <div class="status-wrapper">
-              <select class="status-select">
-                <option value="pending">Pending</option>
-                <option value="out-for-delivery">Out for Delivery</option>
-                <option value="delivered">Delivered</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="delivery-card">
-            <div class="details">
-              <h3>Client: Jane Smith</h3>
-              <p>Address: 456 Oak Ave</p>
-              <p>Meal: Vegan Salad</p>
-            </div>
-
-            <div class="status-wrapper">
-              <select class="status-select">
-                <option value="pending">Pending</option>
-                <option value="out-for-delivery">Out for Delivery</option>
-                <option value="delivered">Delivered</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="delivery-card">
-            <div class="details">
-              <h3>Client: Mike Johnson</h3>
-              <p>Address: 789 Pine Blvd</p>
-              <p>Meal: Beef Stew</p>
-            </div>
-
-            <div class="status-wrapper">
-              <select class="status-select">
-                <option value="pending">Pending</option>
-                <option value="out-for-delivery">Out for Delivery</option>
-                <option value="delivered">Delivered</option>
-              </select>
-            </div>
-        </section>
 
         <div class="client-modal">
           <div class="modal-content">
