@@ -1,7 +1,6 @@
 package com.servlet;
 
 import com.utils.DatabaseManager;
-import com.utils.EncryptionUtils;
 import java.io.IOException; 
 import java.sql.*;	
 import java.security.MessageDigest;
@@ -25,80 +24,82 @@ public class DonationPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Retrieve form data
         String name = request.getParameter("name");
+        String role = request.getParameter("userrole");
         String email = request.getParameter("email");
-        String phoneNum = request.getParameter("number");
-        String address = request.getParameter("address");
-        String donateAmount = request.getParameter("donateamount");
-        String frequency = request.getParameter("frequency");
-        String purpose = request.getParameter("purpose");
-        String cardNum = request.getParameter("cardnum");
-        String expDate = request.getParameter("expdate");
-        String billAdd = request.getParameter("billadd");
-        String sameAsDonAddParam = request.getParameter("sameasdonadd");
+        String[] dietaryreq = request.getParameterValues ("dietaryreq");
         
-        boolean sameAsDonorAdd = (sameAsDonAddParam != null && sameAsDonAddParam.equalsIgnoreCase("TRUE"));
-        if (sameAsDonorAdd == true) {
-        	billAdd = address;
+        if (dietaryreq != null) {
+            for (String item : dietaryreq) {
+                System.out.println("Selected: " + item);
+                // You can also store in DB, or join into a comma-separated string
+            }
+        } else {
+            System.out.println("No dietary preferences selected.");
         }
         
-        String subNewsParam = request.getParameter("subnews");
-        
-        boolean subNews = (subNewsParam != null && subNewsParam.equalsIgnoreCase("TRUE"));
-        
-        String anonParam = request.getParameter("anon");
-        
-        boolean anon = (anonParam != null && anonParam.equalsIgnoreCase("TRUE"));
-        
-        String notes = request.getParameter("notes");
-        String dedication = request.getParameter("dedication");
-        
-        String encryptedCardNum = "";
+        String phoneNum = request.getParameter("phoneNum");
+        String disDesc = request.getParameter("disDesc");
+        String address = request.getParameter("address");
+        String password = request.getParameter("password");
+        String delTime = request.getParameter("delTime");
+        String rePassword = request.getParameter("confpassword");
+        String emerName = request.getParameter("emername");
+        String emerPhoneNum = request.getParameter("emernum");
 
-        try {
-            encryptedCardNum = EncryptionUtils.encrypt(cardNum);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Failed to encrypt card number.");
-            request.getRequestDispatcher("/DonationForm.jsp").forward(request, response);
+        // Validate input (check if passwords match)
+        if (!password.equals(rePassword)) {
+            request.setAttribute("error", "Passwords do not match!");
+            request.getRequestDispatcher("/Register.jsp").forward(request, response);
             return;
         }
+
+        // Hash the password before storing it in the database
+        String hashedPassword = hashPassword(password);
         
-        	try (Connection conn = DatabaseManager.getConnection()) {
+try (Connection conn = DatabaseManager.getConnection()) {
+            
+            // Check if the email is already in use
+            String checkQuery = "SELECT COUNT(*) AS count FROM memberuser WHERE email = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
+                checkStmt.setString(1, email);
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt("count") > 0) {
+                        request.setAttribute("error", "Email is already in use!");
+                        request.getRequestDispatcher("/Register.jsp").forward(request, response);
+                        return;
+                    }
+                }
+            }
             
             // Proceed with insertion if email is not used
-            String insertQuery = "INSERT INTO donation (donor_name, donor_email, donor_phonenum, donor_address, donation_amount, donation_frequency, donation_purpose, card_number, expiry_date, billing_address, same_as_donor, subscribe_newsletter, anonymous, donor_notes, dedicate_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO memberuser (name, email, phonenum, address, password, role, disdesc, deltime, emername, emerphonenum) VALUES (?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
                 stmt.setString(1, name);
                 stmt.setString(2, email);
                 stmt.setString(3, phoneNum);
                 stmt.setString(4, address);
-                stmt.setString(5, donateAmount);
-                stmt.setString(6, frequency);
-                stmt.setString(7, purpose);
-                stmt.setString(8, encryptedCardNum);
-                stmt.setString(9, expDate);
-                stmt.setString(10, billAdd);
-                stmt.setBoolean(11, sameAsDonorAdd);
-                stmt.setBoolean(12, subNews);
-                stmt.setBoolean(13, anon);
-                stmt.setString(14, notes);
-                stmt.setString(15, dedication);
+                stmt.setString(5, hashedPassword);
+                stmt.setString(6, role);
+                stmt.setString(7, disDesc);
+                stmt.setString(8, delTime);
+                stmt.setString(9, emerName);
+                stmt.setString(10, emerPhoneNum);
 
                 int rowsInserted = stmt.executeUpdate();
 
                 if (rowsInserted > 0) {
-                    request.setAttribute("message", "Donation successful!");
-                    response.sendRedirect("Home");
+                    request.setAttribute("message", "Registration successful! Please login.");
+                    response.sendRedirect("Login.jsp");
                 } else {
-                    request.setAttribute("error", "Donation Failed. Please try again.");
-                    request.getRequestDispatcher("/DonationPage.jsp").forward(request, response);
+                    request.setAttribute("error", "Registration failed. Please try again.");
+                    request.getRequestDispatcher("/Register.jsp").forward(request, response);
                 }
             }
             
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "Database error: " + e.getMessage());
-            request.getRequestDispatcher("/DonationPage.jsp").forward(request, response);
+            request.getRequestDispatcher("/Register.jsp").forward(request, response);
         }
     }
 

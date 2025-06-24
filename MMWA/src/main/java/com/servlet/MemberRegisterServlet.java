@@ -18,6 +18,7 @@ public class MemberRegisterServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/RegisterMember.jsp");
+	    System.out.println("Why fucky wucky?");
 	    dispatcher.forward(request, response);
 	}
 	
@@ -72,9 +73,9 @@ public class MemberRegisterServlet extends HttpServlet {
         System.out.println("Checking Password");
         // Validate input (check if passwords match)
         if (!password.equals(rePassword)) {
-        	HttpSession session = request.getSession();
-        	session.setAttribute("error", "Mismatched Passwords, Try again");
-        	request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response); 
+            request.setAttribute("error", "Passwords do not match!");
+            System.out.println("Password wrong bozo");
+            request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response);
             return;
         }
 
@@ -93,9 +94,8 @@ public class MemberRegisterServlet extends HttpServlet {
                 checkStmt.setString(1, email);
                 try (ResultSet rs = checkStmt.executeQuery()) {
                     if (rs.next() && rs.getInt("count") > 0) {
-                    	HttpSession session = request.getSession();
-                    	session.setAttribute("error", "Email Already in Use, Please Log in Instead");
-                    	request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response); 
+                        request.setAttribute("error", "Email is already in use!");
+                        request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response);
                         return;
                     }
                 }
@@ -121,13 +121,11 @@ public class MemberRegisterServlet extends HttpServlet {
                 int rowsInserted = stmt.executeUpdate();
 
                 if (rowsInserted > 0) {
-                	HttpSession session = request.getSession();
-                	session.setAttribute("message", "Registration successful! Please login.");
-                	response.sendRedirect("Login");
-                } else {	
-                	HttpSession session = request.getSession();
-                	session.setAttribute("error", "Registration failed. Please try again.");
-                	request.getRequestDispatcher("RegisterMember").forward(request, response);  
+                    request.setAttribute("message", "Registration successful! Please login.");
+                    response.sendRedirect("Login");
+                } else {
+                    request.setAttribute("error", "Registration failed. Please try again.");
+                    request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response);
                 }
             }
             

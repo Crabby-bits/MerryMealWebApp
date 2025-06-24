@@ -1,4 +1,4 @@
-CREATE DATABASE mmwebapp_db;	
+CREATE DATABASE mmwebapp_db;
 USE mmwebapp_db;
 
 CREATE TABLE memberuser(
@@ -84,7 +84,7 @@ CREATE TABLE donation(
     donation_amount DECIMAL(10,2) NOT NULL,
     donation_frequency ENUM('ONE-TIME', 'MONTHLY', 'QUARTERLY', 'ANNUALLY') NOT NULL,
     donation_purpose TEXT,
-    card_number VARCHAR(255) NOT NULL,
+    card_number VARCHAR(20) NOT NULL,
     expiry_date DATE NOT NULL,
     billing_address VARCHAR(255) NOT NULL,
     same_as_donor BOOLEAN DEFAULT FALSE,
@@ -94,10 +94,3 @@ CREATE TABLE donation(
     dedicate_message TEXT,
     donation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) AUTO_INCREMENT = 600000;
-
-CREATE TABLE adminuser(
-	admin_userid INT AUTO_INCREMENT PRIMARY KEY,
-    admin_name VARCHAR(200) NOT NULL,
-    admin_password VARCHAR (255) NOT NULL,
-    admin_salt VARCHAR (32) NOT NULL
-) AUTO_INCREMENT = 700000;

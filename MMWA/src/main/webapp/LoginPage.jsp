@@ -40,22 +40,6 @@
 	<body>
 		<section class = "loginform-section d-flex justify-content-center">
 			<div class = "loginform-container">
-			<c:if test="${not empty sessionScope.message}">
-    				<div class="alert alert-success alert-dismissible fade show" role="alert">
-    					${sessionScope.message}
-    					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
-    				<c:remove var="message" scope="session"/>
-				</c:if>
-
-				<c:if test="${not empty sessionScope.error}">
-        			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            			${error}
-            			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        			</div>	
-        			<c:remove var="error" scope="session"/>
-    			</c:if>
-    			
 				<div class = "d-flex align-items-center justify-content-center text-center">
 				<h1> Login </h1>
 				</div>	
@@ -87,12 +71,6 @@
         						<input class="form-check-input" type="radio" name="acctype" id="partner" value="PARTNER">
         						<label class="form-check-label" for="partner">
           							Partner
-        						</label>
-      						</div>
-      						<div class="form-check form-check-inline">
-        						<input class="form-check-input" type="radio" name="acctype" id="admin" value="ADMIN">
-        						<label class="form-check-label" for="admin">
-          							Admin
         						</label>
       						</div>
   						</fieldset>	
