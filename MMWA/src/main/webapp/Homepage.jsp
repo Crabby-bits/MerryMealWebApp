@@ -55,8 +55,8 @@
 			<img src= "<%= request.getContextPath() %>/assets/Sideimageright.jpg" alt="Side Image" class="">
 			<div class="Aboutus-text">
 				<h1>ABOUT MERRYMEAL</h1>
-				<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				<p> MerryMeal is a charitable organization dedicated to preparing and delivering nutritious meals to seniors and individuals with disabilities who are unable to cook for themselves. Our mission is to ensure that every member receives a warm, healthy meal with care and compassion.</p>
+				<p> Our Services runs between <b>Monday to Friday</b>, delivering <b>hot meals</b> to our members. We can still deliver <b>cold meals on the weekends and to those who are >10km away</b></p>
 			</div>
 			<img src= "<%= request.getContextPath() %>/assets/Sideimageleft.jpg" alt="Side Image" class="">
 		</section>
