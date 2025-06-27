@@ -1,18 +1,20 @@
 package com.servlet;
 
-import java.io.IOException; 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
 
-@WebServlet("/Admin")
+/**
+ * Simple forward to the JSP so you can visit /admin-dashboard
+ */
+@WebServlet("/admin-dashboard")
 public class AdminDashboardServlet extends HttpServlet {
-	
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("/admindashboard.jsp");
-	    dispatcher.forward(request, response);
-	}
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher("/admindashboard.jsp");
+        rd.forward(req, resp);
+    }
 }
