@@ -1,57 +1,74 @@
 package com.servlet;
 
 import com.utils.DatabaseManager;
-
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.math.BigDecimal;
 
+/**
+ * Handles POST /record-donation
+ */
 @WebServlet("/record-donation")
+@MultipartConfig                       // <-- allows multipart/form-data
 public class RecordDonationServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String amountStr = request.getParameter("donateamount");
-
-        if (amountStr == null || amountStr.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("Missing donation amount");
+        String amountStr = req.getParameter("donateamount");
+        if (amountStr == null || amountStr.trim().isEmpty()) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.getWriter().write("Missing donation amount");
             return;
         }
 
         try (Connection conn = DatabaseManager.getConnection()) {
-            // Insert minimal required fields to avoid NOT NULL constraint errors
-            String sql = "INSERT INTO donation (donor_name, donor_email, donor_phonenum, donor_address, " +
-                         "donation_amount, donation_frequency, card_number, expiry_date, billing_address) " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql =
+              "INSERT INTO donation (" +
+              " donor_name, donor_email, donor_phonenum, donor_address, " +
+              " donation_amount, donation_frequency, donation_purpose, " +
+              " card_number, expiry_date, billing_address" +
+              ") VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                // Dummy placeholder values
-                stmt.setString(1, "Anonymous"); // donor_name
-                stmt.setString(2, "placeholder@example.com"); // donor_email
-                stmt.setLong(3, 1234567890L); // donor_phonenum
-                stmt.setString(4, "Unknown Address"); // donor_address
-                stmt.setBigDecimal(5, new BigDecimal(amountStr)); // donation_amount
-                stmt.setString(6, "ONE-TIME"); // donation_frequency
-                stmt.setString(7, "0000000000000000"); // card_number
-                stmt.setDate(8, new java.sql.Date(System.currentTimeMillis())); // expiry_date
-                stmt.setString(9, "Unknown Billing"); // billing_address
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                stmt.executeUpdate();
+                ps.setString(1, req.getParameter("name")   != null ? req.getParameter("name")   : "PayPal Donor");
+                ps.setString(2, req.getParameter("email")  != null ? req.getParameter("email")  : "paypal@example.com");
+
+                long phone = 0L;
+                String phoneStr = req.getParameter("number");
+                if (phoneStr != null && phoneStr.matches("\\d{6,15}"))
+                    phone = Long.parseLong(phoneStr);
+                ps.setLong(3, phone);
+
+                ps.setString(4, req.getParameter("address") != null ? req.getParameter("address") : "N/A");
+                ps.setBigDecimal(5, new BigDecimal(amountStr));
+                ps.setString(6, req.getParameter("frequency") != null ? req.getParameter("frequency") : "ONE-TIME");
+                ps.setString(7, req.getParameter("purpose"));
+
+                ps.setString(8,  "0000000000000000");                 // dummy card number
+                ps.setDate  (9,  Date.valueOf("2030-12-31"));         // dummy expiry
+                ps.setString(10, "PayPal Checkout");                  // dummy billing
+
+                ps.executeUpdate();
             }
 
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("Donation recorded.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("Database error");
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.getWriter().write("Donation recorded.");
+
+        } catch (NumberFormatException | SQLException ex) {
+            ex.printStackTrace();
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().write("DB error: " + ex.getMessage());
         }
     }
 }

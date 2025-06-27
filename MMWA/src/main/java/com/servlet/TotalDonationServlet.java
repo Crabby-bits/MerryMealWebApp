@@ -1,7 +1,6 @@
 package com.servlet;
 
 import com.utils.DatabaseManager;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -12,32 +11,27 @@ import java.sql.*;
 
 @WebServlet("/get-total-donation")
 public class TotalDonationServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        response.setContentType("application/json");
-        try (Connection conn = DatabaseManager.getConnection()) {
-            String sql = "SELECT SUM(donation_amount) AS total FROM donation";
-            try (PreparedStatement stmt = conn.prepareStatement(sql);
-                 ResultSet rs = stmt.executeQuery()) {
+        res.setContentType("application/json");
+        double total = 0.0;
 
-                PrintWriter out = response.getWriter();
-                if (rs.next()) {
-                    double total = rs.getDouble("total");
-                    if (rs.wasNull()) {
-                        total = 0.0; // explicitly handle NULL
-                    }
-                    out.print("{\"total\":" + total + "}");
-                } else {
-                    out.print("{\"total\":0.0}");
-                }
-                out.flush();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().print("{\"total\":0.0}");
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "SELECT SUM(donation_amount) AS total FROM donation");
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) total = rs.getDouble("total");
+
+        } catch (Exception e) {
+            e.printStackTrace();  // still return 0 if error
         }
+
+        PrintWriter out = res.getWriter();
+        out.print("{\"total\":" + total + "}");
+        out.flush();
     }
 }
-
