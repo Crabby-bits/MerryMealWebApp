@@ -76,7 +76,7 @@
     }
 
     function handleLogout() {
-      window.location.href = "login.jsp"; // redirect to login.jsp
+      window.location.href = "Homepage.jsp"; // redirect to login.jsp
     }
 
     // ✅ Load total donations on page load
