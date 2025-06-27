@@ -79,7 +79,7 @@
       window.location.href = "Homepage.jsp"; // redirect to login.jsp
     }
 
-    // ✅ Load total donations on page load
+    // ✅ Load total donations on page loaded
     window.onload = function () {
       fetch('<%=request.getContextPath()%>/get-total-donation')
         .then(response => response.json())
