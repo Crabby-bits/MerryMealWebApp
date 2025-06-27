@@ -53,11 +53,11 @@ public class LoginServlet extends HttpServlet {
             break;
         case "ADMIN":
             tableName = "adminuser";
-            idColumn = "vol_userid";
-            nameColumn = "vol_name";
-            emailColumn = "vol_email";
-            passwordColumn = "vol_password";
-            saltColumn = "vol_salt";
+            idColumn = "admin_userid";
+            nameColumn = "admin_name";
+            emailColumn = "admin_email";
+            passwordColumn = "admin_password";
+            saltColumn = "admin_salt";
             break;
         default: // Default to "User"
             tableName = "memberuser";
@@ -93,22 +93,24 @@ public class LoginServlet extends HttpServlet {
 	                            response.sendRedirect("PartnerDashboard");
 	                        } else if ("VOLUNTEER".equals(accountType)) {
 	                            response.sendRedirect("VolunteerDashboard");
-	                        } else {
+	                        } else if ("ADMIN".equals(accountType)) {
+	                            response.sendRedirect("Admin");
+	                        }else {
 	                            response.sendRedirect("MemberDashboard");
 	                        }
 
 	                    } else {
 	                        // Wrong password
-	                    	HttpSession session = request.getSession();
-	                    	session.setAttribute("error", "Incorrect password");
-	                    	request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response); 
+	                        HttpSession session = request.getSession();
+	                        session.setAttribute("error", "Incorrect password");
+	                        response.sendRedirect("Login");
 	                        return;
 	                    }
 	                } else {
 	                    // Email not found
 	                	HttpSession session = request.getSession();
                     	session.setAttribute("error", "Invalid Email");
-                    	request.getRequestDispatcher("/RegisterMember.jsp").forward(request, response); 
+                    	request.getRequestDispatcher("Login").forward(request, response); 
                         return;
 	                }
 	            }

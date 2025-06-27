@@ -37,25 +37,10 @@
 
 	<section class="Memform-section d-flex justify-content-center">
 		<div class="Memform-container">
-			<c:if test="${not empty sessionScope.message}">
-    				<div class="alert alert-success alert-dismissible fade show" role="alert">
-    					${sessionScope.message}
-    					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
-    				<c:remove var="message" scope="session"/>
-				</c:if>
-
-				<c:if test="${not empty sessionScope.error}">
-        			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            			${error}
-            			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        			</div>	
-        			<c:remove var="error" scope="session"/>
-    			</c:if>
 			<div class="d-flex align-items-center justify-content-center text-center">
 				<h1>Donation Form</h1>
 			</div>
-			<form class="row g-3" id="donationForm">
+			<form class="row g-3" action="Donate" method="post" id="donationForm">
 				<h2>Donor Information</h2>
 				<div class="col-md-6">
 					<label for="name" class="form-label">*Name</label>
@@ -189,55 +174,79 @@
 	<script src="<%= request.getContextPath() %>/js/navigation.js"></script> 
 
 	<script>
-	document.querySelector(".submit-btn").addEventListener("click", function (e) {
-	    e.preventDefault();
-	    const form = document.querySelector("#donationForm");
-	    const formData = new FormData(form);
+const form = document.querySelector("#donationForm");
+const submitButton = document.querySelector(".submit-btn");
 
-		// this part is the whole email reciept script portion
-	    const scriptURL = "https://script.google.com/macros/s/AKfycbxJ3czTlx6jK--OnSx-WUtQ7jgd2jroghlhEvoTrsPXOu307mRSF39DvW7zzWKLvXic/exec";
-		// above is the script link where it uses the google api to send out emails and stuff / also handles google sheet history logs.
-	    fetch(scriptURL, {
-	        method: "POST",
-	        body: formData
-	    })
-	    .then(response => response.json())
-	    .then(data => {
-	        if (data.result === "success") {
-	            alert("🎉 Donation submitted successfully! Thank you.");
-	            form.reset();
-	            document.getElementById("billadd").readOnly = false; // Reset read-only after submission
-	        } else {
-	            alert("❌ Error: " + data.message);
-	        }
-	    })
-	    .catch(error => {
-	        console.error("Error!", error);
-	        alert("❌ Something went wrong. Please try again.");
-	    });
-	});
+submitButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
 
-	// Automatically copy donor address to billing address and make it readonly
-	const donorAddressInput = document.getElementById("address");
-	const billingAddressInput = document.getElementById("billadd");
-	const billingCheckbox = document.getElementById("sameasdonadd");
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxJ3czTlx6jK--OnSx-WUtQ7jgd2jroghlhEvoTrsPXOu307mRSF39DvW7zzWKLvXic/exec";
 
-	billingCheckbox.addEventListener("change", function () {
-	    if (this.checked) {
-	        billingAddressInput.value = donorAddressInput.value;
-	        billingAddressInput.readOnly = true;
-	    } else {
-	        billingAddressInput.value = "";
-	        billingAddressInput.readOnly = false;
-	    }
-	});
+    // First, send to Google Apps Script
+    fetch(scriptURL, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.result === "success") {
+            console.log("✅ Google Apps Script submission successful.");
 
-	donorAddressInput.addEventListener("input", function () {
-	    if (billingCheckbox.checked) {
-	        billingAddressInput.value = donorAddressInput.value;
-	    } // hi
-	});
-	</script>
+            // Now, send to your Java servlet
+            fetch("<%= request.getContextPath() %>/Donate", {
+                method: "POST",
+                body: formData
+            })
+            .then(servletResponse => {
+                if (servletResponse.ok) {
+                    alert("🎉 Donation submitted successfully! Thank you.");
+                    form.reset();
+                    document.getElementById("billadd").readOnly = false;
+                } else {
+                    return servletResponse.text().then(text => {
+                        console.error("Servlet error:", text);
+                        alert("⚠️ Donation saved in Google Sheets, but failed in our system.");
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error sending to servlet:", error);
+                alert("⚠️ Donation saved in Google Sheets, but error occurred recording your donation internally.");
+            });
+        } else {
+            alert("❌ Error submitting to Google Sheets: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error submitting to Google Sheets:", error);
+        alert("❌ Something went wrong. Please try again.");
+    });
+});
+
+// Auto-copy billing address logic
+const donorAddressInput = document.getElementById("address");
+const billingAddressInput = document.getElementById("billadd");
+const billingCheckbox = document.getElementById("sameasdonadd");
+
+billingCheckbox.addEventListener("change", function () {
+    if (this.checked) {
+        billingAddressInput.value = donorAddressInput.value;
+        billingAddressInput.readOnly = true;
+    } else {
+        billingAddressInput.value = "";
+        billingAddressInput.readOnly = false;
+    }
+});
+
+donorAddressInput.addEventListener("input", function () {
+    if (billingCheckbox.checked) {
+        billingAddressInput.value = donorAddressInput.value;
+    }
+});
+</script>
+
 		
 
 </body>

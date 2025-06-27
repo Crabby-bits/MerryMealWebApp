@@ -8,6 +8,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 
+@MultipartConfig
 @WebServlet("/Donate")
 public class DonationPageServlet extends HttpServlet {
 	
@@ -15,13 +16,14 @@ public class DonationPageServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("/DonationPage.jsp");
+		System.out.println("Getting page");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/DonationPage.jsp");
 	    dispatcher.forward(request, response);
 	}
 	
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve form data
+		System.out.println("Starting Process");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phoneNum = request.getParameter("number");
@@ -51,7 +53,8 @@ public class DonationPageServlet extends HttpServlet {
         String dedication = request.getParameter("dedication");
         
         String encryptedCardNum = "";
-
+        
+        System.out.println("Encrypting");
         try {
             encryptedCardNum = EncryptionUtils.encrypt(cardNum);
         } catch (Exception e) {
@@ -61,8 +64,10 @@ public class DonationPageServlet extends HttpServlet {
             return;
         }
         
+        System.out.println("Connecting to DB");
         	try (Connection conn = DatabaseManager.getConnection()) {
             
+        	System.out.println("Inserting");
             // Proceed with insertion if email is not used
             String insertQuery = "INSERT INTO donation (donor_name, donor_email, donor_phonenum, donor_address, donation_amount, donation_frequency, donation_purpose, card_number, expiry_date, billing_address, same_as_donor, subscribe_newsletter, anonymous, donor_notes, dedicate_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
@@ -85,17 +90,19 @@ public class DonationPageServlet extends HttpServlet {
                 int rowsInserted = stmt.executeUpdate();
 
                 if (rowsInserted > 0) {
-                	HttpSession session = request.getSession();
-                	session.setAttribute("message", "Donation Successful");
+                	System.out.println("Success");
+                    request.setAttribute("message", "Donation successful!");
+                    response.sendRedirect("Home");
                 } else {
-                	HttpSession session = request.getSession();
-                	session.setAttribute("error", "Donation Failed");
-                	request.getRequestDispatcher("Donate").forward(request, response);
+                	System.out.println("Failed");
+                    request.setAttribute("error", "Donation Failed. Please try again.");
+                    request.getRequestDispatcher("/DonationPage.jsp").forward(request, response);
                 }
             }
             
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("DB Fail");
             request.setAttribute("error", "Database error: " + e.getMessage());
             request.getRequestDispatcher("/DonationPage.jsp").forward(request, response);
         }
