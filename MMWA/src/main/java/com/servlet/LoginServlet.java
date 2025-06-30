@@ -90,11 +90,11 @@ public class LoginServlet extends HttpServlet {
 	                        session.setAttribute("accountType", accountType);
 	                        
 	                        if ("PARTNER".equals(accountType)) {
-	                            response.sendRedirect("PartnerDashboard");
+	                            response.sendRedirect("DeliveryProgress");
 	                        } else if ("VOLUNTEER".equals(accountType)) {
 	                            response.sendRedirect("VolunteerDashboard");
 	                        } else if ("ADMIN".equals(accountType)) {
-	                            response.sendRedirect("Admin");
+	                            response.sendRedirect("admin-dashboard");
 	                        }else {
 	                            response.sendRedirect("MemberDashboard");
 	                        }

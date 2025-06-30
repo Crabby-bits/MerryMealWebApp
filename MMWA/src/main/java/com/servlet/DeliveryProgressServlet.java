@@ -3,9 +3,11 @@ package com.servlet;
 import com.dao.DeliveryDAO;
 import com.models.Delivery;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.RequestDispatcher;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,13 +26,23 @@ public class DeliveryProgressServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+ 
+    	
+    	try {
+    	    List<Delivery> deliveries = deliveryDAO.getAllDeliveries();
+    	    request.setAttribute("deliveryList", deliveries);
+    	} catch(Exception e) {
+    	    e.printStackTrace();
+    	    throw new ServletException("Error retrieving deliveries", e);
+    	    
+    	}
         List<Delivery> deliveries = deliveryDAO.getAllDeliveries();
 
         // Attach the list to the request scope
         request.setAttribute("deliveryList", deliveries);
 
         // Forward to JSP
-        request.getRequestDispatcher("DeliveryProgress.jsp").forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/DeliveryProgress.jsp");
+	    dispatcher.forward(request, response);
     }
 }
