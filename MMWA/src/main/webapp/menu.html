@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Meals On Wheels - Weekly Menu</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" th:href="@{/footer.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="#">Meals On Wheels</a>
+    <div class="ms-auto">
+      <a href="#" class="nav-link text-white d-inline">Home</a>
+      <a href="#" class="nav-link text-white d-inline">My Profile</a>
+      <a href="#" class="nav-link text-white d-inline">My Orders</a>
+      <a href="#" class="nav-link text-white d-inline">Weekly Menu</a>
+      <span class="text-white mx-2">Welcome, User</span>
+      <a href="#" class="btn btn-light btn-sm">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="text-center my-4">
+  <button class="btn btn-light">⬅️ Previous Week</button>
+  <strong class="mx-3">Week of June 16–22, 2025</strong>
+  <button class="btn btn-light">Next Week ➡️</button>
+</div>
+
+<div class="text-center mb-4">
+  <button class="btn btn-outline-primary m-1">All</button>
+  <button class="btn btn-outline-primary m-1">Standard</button>
+  <button class="btn btn-outline-primary m-1">Vegetarian</button>
+  <button class="btn btn-outline-primary m-1">Low-Sodium</button>
+  <button class="btn btn-outline-primary m-1">Diabetic-Friendly</button>
+</div>
+
+<div class="container">
+  <div class="row">
+  <!-- Meal Card 1 -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 p-3">
+      <img src="https://via.placeholder.com/300" class="card-img-top" alt="Meal Image">
+      <div class="card-body">
+        <h5 class="card-title">Chicken Rice</h5>
+        <p class="card-text">Type: Standard</p>
+        <p class="card-text">Calories: 500 kcal</p>
+        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+        <a href="#" class="btn btn-success btn-sm">Add to Plan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meal Card 2 -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 p-3">
+      <img src="https://via.placeholder.com/300" class="card-img-top" alt="Meal Image">
+      <div class="card-body">
+        <h5 class="card-title">Vegetable Pasta</h5>
+        <p class="card-text">Type: Vegetarian</p>
+        <p class="card-text">Calories: 420 kcal</p>
+        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+        <a href="#" class="btn btn-success btn-sm">Add to Plan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meal Card 3 -->
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 p-3">
+      <img src="https://via.placeholder.com/300" class="card-img-top" alt="Meal Image">
+      <div class="card-body">
+        <h5 class="card-title">Low-Sodium Beef Stew</h5>
+        <p class="card-text">Type: Low-Sodium</p>
+        <p class="card-text">Calories: 480 kcal</p>
+        <a href="#" class="btn btn-primary btn-sm">View Details</a>
+        <a href="#" class="btn btn-success btn-sm">Add to Plan</a>
+      </div>
+    </div>
+  </div>
+ <!-- Meal Card 4 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 p-3">
+        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Meal Image">
+        <div class="card-body">
+          <h5 class="card-title">Diabetic-Friendly Fish</h5>
+          <p class="card-text">Type: Diabetic-Friendly</p>
+          <p class="card-text">Calories: 390 kcal</p>
+          <a href="#" class="btn btn-primary btn-sm">View Details</a>
+          <a href="#" class="btn btn-success btn-sm">Add to Plan</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meal Card 5 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 p-3">
+        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Meal Image">
+        <div class="card-body">
+          <h5 class="card-title">Tofu Stir Fry</h5>
+          <p class="card-text">Type: Vegetarian</p>
+          <p class="card-text">Calories: 410 kcal</p>
+          <a href="#" class="btn btn-primary btn-sm">View Details</a>
+          <a href="#" class="btn btn-success btn-sm">Add to Plan</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meal Card 6 -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 p-3">
+        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Meal Image">
+        <div class="card-body">
+          <h5 class="card-title">Low-Sodium Chicken Soup</h5>
+          <p class="card-text">Type: Low-Sodium</p>
+          <p class="card-text">Calories: 360 kcal</p>
+          <a href="#" class="btn btn-primary btn-sm">View Details</a>
+          <a href="#" class="btn btn-success btn-sm">Add to Plan</a>
+        </div>
+</div>
+ </div>
+</div>
+</div>
+
+<footer class="footer-container">
+  <div class="footer-content container-fluid">
+    <div class="footer-column">
+      <img src="/images/footer-logo-large.png" alt="MerryMeal Logo" class="footer-logo">
+    </div>
+    <div class="footer-column">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Careers</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="footer-column">
+      <p>Phone #: +65 6123 4567</p>
+      <p>Email: contact@merrymeal.org</p>
+      <p>Address: MerryMeal Headquarters<br>
+         123 Community Care Lane<br>
+         #05-01 Kindness Hub<br>
+         Singapore 567890</p>
+    </div>
+    <div class="footer-column footer-social-column">
+      <p>Follow us</p>
+      <div class="footer-icons">
+        <img src="/images/icon-instagram.png" alt="Instagram" class="icon">
+        <img src="/images/icon-facebook.png" alt="Facebook" class="icon">
+        <img src="/images/icon-tiktok.png" alt="TikTok" class="icon">
+        <img src="/images/icon-close.png" alt="Close" class="icon">
+      </div>
+      <p class="footer-copy">© 2025 MerryMeal.<br>All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
