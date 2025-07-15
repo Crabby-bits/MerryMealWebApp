@@ -96,7 +96,7 @@ public class LoginServlet extends HttpServlet {
 	                        } else if ("ADMIN".equals(accountType)) {
 	                            response.sendRedirect("admin-dashboard");
 	                        }else {
-	                            response.sendRedirect("MemberDashboard");
+	                            response.sendRedirect("MenuServlet");
 	                        }
 
 	                    } else {

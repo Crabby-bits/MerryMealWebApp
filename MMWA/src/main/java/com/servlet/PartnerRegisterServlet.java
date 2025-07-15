@@ -58,7 +58,7 @@ public class PartnerRegisterServlet extends HttpServlet {
         if (!password.equals(rePassword)) {
         	HttpSession session = request.getSession();
         	session.setAttribute("error", "Mismatched Passwords, Try again");
-        	request.getRequestDispatcher("RegisterPartner").forward(request, response); 
+        	request.getRequestDispatcher("RegisterPartner.jsp").forward(request, response); 
             return;
         }
 
@@ -76,7 +76,7 @@ public class PartnerRegisterServlet extends HttpServlet {
                     if (rs.next() && rs.getInt("count") > 0) {
                     	HttpSession session = request.getSession();
                     	session.setAttribute("error", "Email Already in Use, Please Log in Instead");
-                    	request.getRequestDispatcher("RegisterPartner").forward(request, response); 
+                    	request.getRequestDispatcher("RegisterPartner.jsp").forward(request, response); 
                         return;
                     }
                 }
@@ -106,14 +106,14 @@ public class PartnerRegisterServlet extends HttpServlet {
                 } else {
                 	HttpSession session = request.getSession();
                 	session.setAttribute("error", "Registration failed. Please try again.");
-                	request.getRequestDispatcher("RegisterPartner").forward(request, response);  
+                	request.getRequestDispatcher("RegisterPartner.jsp").forward(request, response);  
                 }
             }
             
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "Database error: " + e.getMessage());
-            request.getRequestDispatcher("RegisterPartner").forward(request, response);
+            request.getRequestDispatcher("RegisterPartner.jsp").forward(request, response);
         }
     }
 }

@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +9,7 @@
   <title>MerryMeal Admin Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Custom CSS only -->
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/admindashboard.css">
 </head>
 <body>
@@ -14,8 +17,7 @@
   <!-- Mobile Toggle Button -->
   <button class="toggle-btn d-md-none" onclick="toggleSidebar()">☰</button>
 
-  <div class="admin-dashboard"> <!-- Scoped wrapper -->
-
+  <div class="admin-dashboard">
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
       <h4 class="text-center mb-4">MerryMeal Admin</h4>
@@ -60,15 +62,40 @@
         <div class="col-lg-4 col-md-6 col-12">
           <div class="card card-registration p-3">
             <h5>New Registrations</h5>
-            <p class="fs-4" id="registrationCount">--</p>
+            <p class="fs-4" id="registrationCount">${fn:length(registrations)}</p>
           </div>
         </div>
       </div>
+
+      <!-- Registrations Table -->
+      <h4 class="mt-5">Latest Partner Registrations</h4>
+      <table border="1" cellspacing="0" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Organization Name</th>
+            <th>Representative</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="reg" items="${registrations}">
+            <tr>
+              <td>${reg.org_name}</td>
+              <td>${reg.org_rep}</td>
+              <td>${reg.org_email}</td>
+              <td>${reg.org_phonenum}</td>
+            </tr>
+          </c:forEach>
+          <c:if test="${empty registrations}">
+            <tr><td colspan="4">No recent registrations.</td></tr>
+          </c:if>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- JavaScript inline -->
-  <!-- JavaScript inline -->
+  <!-- JavaScript -->
   <script>
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("active");
@@ -76,10 +103,10 @@
     }
 
     function handleLogout() {
-      window.location.href = "Homepage.jsp"; // redirect to login.jsp
+      window.location.href = "Homepage.jsp";
     }
 
-    // ✅ Load total donations on page loaded
+    // Load total donations
     window.onload = function () {
       fetch('<%=request.getContextPath()%>/get-total-donation')
         .then(response => response.json())
